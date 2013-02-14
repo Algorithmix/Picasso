@@ -1,4 +1,5 @@
-﻿using AForge;
+﻿using System.Drawing.Imaging;
+using AForge;
 using AForge.Imaging;
 using AForge.Imaging.Filters;
 using Emgu.CV;
@@ -325,12 +326,13 @@ namespace Picasso
         /// <returns>the background which can be subtracted</returns>
         public static Bitmap FloodFill(Bitmap image, int xpixel, int ypixel, double threshold, Bgr myColor)
         {
+            Bitmap jpg = AForge.Imaging.Image.Clone(image, PixelFormat.Format24bppRgb);
             AForge.Imaging.Filters.PointedColorFloodFill filter = new PointedColorFloodFill();
             int thresh = (int) threshold;
             filter.Tolerance = Color.FromArgb(thresh, thresh, thresh);
             filter.FillColor = Color.Black;
             filter.StartingPoint = new IntPoint(xpixel, ypixel);
-            return filter.Apply(image);
+            return filter.Apply(jpg);
         }
     }
 }
