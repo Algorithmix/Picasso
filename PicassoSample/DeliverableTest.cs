@@ -40,9 +40,9 @@ namespace PicassoSample
             Bgr backgroundColor = Picasso.Heuristics.DetectBackground(load, 20);
             System.Console.WriteLine("Detected Background : " + backgroundColor.ToString());
             System.Console.WriteLine("Detected Background Completed in "+ (DateTime.Now-start).TotalSeconds.ToString() + " seconds");
-
-
-            var backgroundGuess = new Image<Bgr, Byte>(100, 100, backgroundColor);
+            Color sample = Color.FromArgb(255, (int)backgroundColor.Red, (int)backgroundColor.Green, (int)backgroundColor.Blue);
+            System.Drawing.Point startFill = Heuristics.GetStartingFloodFillPoint(load, sample);
+            var backgroundGuess = new Image<Bgr, Byte>(startFill.X, startFill.Y, backgroundColor);
             ImageViewer display = new ImageViewer(backgroundGuess, "Mask");
             display.ShowDialog();
 
